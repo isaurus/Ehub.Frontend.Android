@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "394698849339",
+    "project_id": "ehub-17207",
+    "storage_bucket": "ehub-17207.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394698849339:android:79f1a53ce04cc7cf44f01e",
+        "android_client_info": {
+          "package_name": "com.isaac.ehub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqa6Br-KTARURkG3nSA11U8b3Co9aDiyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
