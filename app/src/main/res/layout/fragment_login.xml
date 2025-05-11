@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_email"
-        app:layout_constraintBottom_toTopOf="@+id/btn_google_sign_in">
+        app:layout_constraintBottom_toTopOf="@+id/tv_forgot_password">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
@@ -64,49 +64,100 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_google_sign_in"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:padding="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_password"
-        app:layout_constraintBottom_toTopOf="@+id/tv_forgot_password" />
-
+    <!-- Texto de olvidaste contraseña alineado a la izquierda -->
     <TextView
         android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="¿Olvidaste tu contraseña?"
         android:textColor="@color/design_default_color_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_password"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login" />
+
+    <!-- Botón de inicio de sesión tradicional -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Iniciar sesión"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google_sign_in"
-        app:layout_constraintBottom_toTopOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
+        app:layout_constraintBottom_toTopOf="@+id/divider_top" />
 
+    <!-- Primer separador con texto "O inicia sesión con" -->
+    <LinearLayout
+        android:id="@+id/divider_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="O inicia sesión con" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider" />
+    </LinearLayout>
+
+    <!-- Botón de Google (ImageButton con logo) -->
+    <ImageButton
+        android:id="@+id/btn_google_sign_in"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@null"
+        android:contentDescription="Iniciar sesión con Google"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_google"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_top"
+        app:layout_constraintBottom_toTopOf="@+id/divider_bottom" />
+
+    <!-- Segundo separador (línea simple) -->
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider_bottom"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_google_sign_in" />
 
+    <!-- Texto de registro y enlace -->
     <TextView
         android:id="@+id/tv_register_prompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="¿No tienes una cuenta?"
         app:layout_constraintEnd_toStartOf="@+id/tv_register"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_bottom" />
 
     <TextView
         android:id="@+id/tv_register"
