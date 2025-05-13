@@ -75,6 +75,10 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.navigation.ui)
 
+    // Firebase BoM
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
     // Lottie
     //implementation(libs.lottie)
 

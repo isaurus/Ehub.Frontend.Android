@@ -3,6 +3,7 @@ package com.isaac.ehub.data.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.isaac.ehub.core.Resource;
 import com.isaac.ehub.data.remote.api.RetrofitService;
 import com.isaac.ehub.data.remote.model.AuthResponse;
@@ -20,11 +21,11 @@ import retrofit2.Response;
 @Singleton
 public class AuthRepositoryImpl implements AuthRepository {
 
-    private final RetrofitService retrofit;
+    private final FirebaseAuth firebaseAuth;
 
     @Inject
-    public AuthRepositoryImpl(RetrofitService retrofit){
-        this.retrofit = retrofit;
+    public AuthRepositoryImpl(FirebaseAuth firebaseAuth){
+        this.firebaseAuth = firebaseAuth;
     }
 
     @Override

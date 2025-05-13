@@ -2,6 +2,10 @@
 agp = "8.9.2"
 # GsonConverter
 converterGson = "2.11.0"
+# Firebase Auth
+firebaseAuth = "23.2.0"
+# Firebase BoM
+firebaseBom = "33.13.0"
 # Fragment
 fragment = "1.8.6"
 # Gson
@@ -33,13 +37,18 @@ navigationUi = "2.9.0"
 retrofit = "2.11.0"
 
 [libraries]
-# LifeCycle
+# Fragment
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
+# LifeCycle
 androidx-lifecycle-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycleRuntimeVersion" }
 androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycleLivedata" }
 androidx-lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-android", version.ref = "lifecycleLivedata" }
 # Activity
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+# Firebase Auth
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
+ # Firebase BoM
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 # Gson
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 # GsonConverter
