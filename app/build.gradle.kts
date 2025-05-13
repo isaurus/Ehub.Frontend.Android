@@ -29,7 +29,6 @@ android {
             )
         }
     }
-    // Para SafeArgs (¿necesario?)
     buildFeatures {
         buildConfig = true
         viewBinding = true  // ViewBinding (reemplazo a 'findViewById()')
@@ -54,7 +53,7 @@ dependencies {
     // Material
     implementation(libs.material)
     // Fragment
-    implementation(libs.fragment)
+    implementation(libs.androidx.fragment)
     // Activity
     implementation(libs.activity)
     // LifeCycle (LiveData)
@@ -66,21 +65,15 @@ dependencies {
     // DaggerHilt
     implementation(libs.hilt.android)
     annotationProcessor(libs.hilt.compiler)
-    // Firebase (BoM)
-    implementation(platform(libs.firebase.bom))
-    // Firebase (Google Analytics)
-    implementation(libs.firebase.analytics)
-    // Fire base (auth)
-    implementation(libs.firebase.auth)
+    // Retrofit
+    implementation(libs.retrofit)
+    // Gson
+    implementation(libs.gson)
+    // GsonConverter
+    implementation(libs.converter.gson)
     // Navigation Component
     implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-    // RxJava
-    // implementation(libs.rxjava)
-    // implementation("io.reactivex.rxjava3:rxjava:3.1.10")
-    // RxAndroid
-    // implementation(libs.rxandroid)
-    // implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation(libs.navigation.ui)
 
     // Lottie
     //implementation(libs.lottie)

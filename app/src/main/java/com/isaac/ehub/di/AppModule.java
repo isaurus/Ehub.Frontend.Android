@@ -1,6 +1,6 @@
 package com.isaac.ehub.di;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.isaac.ehub.data.remote.api.RetrofitService;
 import com.isaac.ehub.data.repository.AuthRepositoryImpl;
 import com.isaac.ehub.domain.repository.AuthRepository;
 import com.isaac.ehub.domain.usecase.auth.LoginWithEmailUseCase;
@@ -13,6 +13,9 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Módulo de Hilt para proveer dependencias.
@@ -21,16 +24,35 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class AppModule {
 
+    private static final String BASE_URL = "http://10.0.2.2:5048/"; // Cambia por tu URL base
+
     @Provides
     @Singleton
-    public static FirebaseAuth provideFirebaseAuth(){
-        return FirebaseAuth.getInstance();
+    public static OkHttpClient provideHttpClient(){
+        return new OkHttpClient.Builder()
+                .build();
     }
 
     @Provides
     @Singleton
-    public static AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth){
-        return new AuthRepositoryImpl(firebaseAuth);
+    public static Retrofit provideRetrofit(OkHttpClient client){
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    public static RetrofitService provideRetrofitService(Retrofit retrofit) {
+        return retrofit.create(RetrofitService.class);
+    }
+
+    @Provides
+    @Singleton
+    public static AuthRepository provideAuthRepository(RetrofitService retrofit){
+        return new AuthRepositoryImpl(retrofit);
     }
 
     @Provides

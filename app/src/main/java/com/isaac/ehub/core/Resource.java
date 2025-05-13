@@ -6,7 +6,7 @@ package com.isaac.ehub.core;
  * @param <T> Genérico para representar el tipo de dato que se espera como resultado de una operación.
  */
 public class Resource<T> {
-    public enum Status { LOADING, SUCCESS, ERROR }
+    public enum Status { LOADING, SUCCESS, ERROR, VALIDATING }
 
     private final Status status;    // Estado de la operación
     private final T data;           // Dato devuelto en caso de éxito
@@ -30,6 +30,8 @@ public class Resource<T> {
         return message;
     }
 
+    public static <T> Resource<T> validating() { return new Resource<>(Status.VALIDATING, null, null); }
+
     public static <T> Resource<T> loading() {
         return new Resource<>(Status.LOADING, null, null);
     }
@@ -38,8 +40,8 @@ public class Resource<T> {
         return new Resource<>(Status.SUCCESS, data, null);
     }
 
-    public static <T> Resource<T> error(String msg, T data) {
-        return new Resource<>(Status.ERROR, data, msg);
+    public static <T> Resource<T> error(String msg) {
+        return new Resource<>(Status.ERROR, null,  msg);
     }
 
     public boolean isLoading() {

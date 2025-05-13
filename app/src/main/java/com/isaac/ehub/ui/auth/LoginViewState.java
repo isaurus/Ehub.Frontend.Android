@@ -18,25 +18,22 @@ public class LoginViewState {
         this.isPasswordValid = isPasswordValid;
     }
 
-    public static LoginViewState idle(){
-        return new LoginViewState(Resource.success(null), true, true);
-    }
-
     public static LoginViewState validating(boolean isEmailValid, boolean isPasswordValid){
-        return new LoginViewState(Resource.success(null), isEmailValid, isPasswordValid);
+        return new LoginViewState(Resource.validating(), isEmailValid, isPasswordValid);
     }
 
     public static LoginViewState loading(){
         return new LoginViewState(Resource.loading(), true, true);
     }
 
-    public static <T> LoginViewState success(T data){
-        return new LoginViewState(Resource.success(data), true, true);
+    public static <T> LoginViewState success(){
+        return new LoginViewState(Resource.success(true), true, true);
     }
 
     public static LoginViewState error(String message){
-        return new LoginViewState(Resource.error(message, null), true, true);
+        return new LoginViewState(Resource.error(message), true, true);
     }
+
 
     public Resource<?> getResource() {
         return resource;
@@ -53,6 +50,7 @@ public class LoginViewState {
     public <T> T getData() {
         return (T) resource.getData();
     }
+
 
     public boolean isEmailValid() {
         return isEmailValid;
