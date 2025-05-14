@@ -1,7 +1,9 @@
 package com.isaac.ehub.domain.repository;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.credentials.GetCredentialRequest;
+import androidx.lifecycle.LiveData;
+
+import com.isaac.ehub.core.Resource;
 
 /**
  * Repositorio para la autenticación de usuarios. Permite:
@@ -12,7 +14,7 @@ import com.google.firebase.auth.AuthResult;
  * el estado de las operaciones.
  */
 public interface AuthRepository {
-    Task<AuthResult> registerWithEmail(String email, String password);
-    Task<AuthResult> loginWithEmail(String email, String password);
-    Task<AuthResult> loginWithGoogle(String idToken);
+    LiveData<Resource<Boolean>> registerWithEmail(String email, String password);
+    LiveData<Resource<Boolean>> loginWithEmail(String email, String password);
+    LiveData<Resource<Boolean>> loginWithGoogle(String idToken);
 }

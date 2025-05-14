@@ -2,8 +2,6 @@ package com.isaac.ehub.domain.usecase.auth;
 
 import androidx.lifecycle.LiveData;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.isaac.ehub.core.Resource;
 import com.isaac.ehub.domain.repository.AuthRepository;
 
@@ -24,7 +22,7 @@ public class LoginWithGoogleUseCase {
         this.authRepository = authRepository;
     }
 
-    public Task<AuthResult> execute(String tokenId){
+    public LiveData<Resource<Boolean>> execute(String tokenId){
         return authRepository.loginWithGoogle(tokenId);
     }
 }

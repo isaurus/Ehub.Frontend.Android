@@ -25,6 +25,7 @@ public class AuthViewModel extends ViewModel {
     public final MutableLiveData<LoginViewState> loginViewState = new MutableLiveData<>();
     public final MutableLiveData<RegistrationViewState> registrationViewState = new MutableLiveData<>();
 
+
     @Inject
     public AuthViewModel(
             LoginWithEmailUseCase loginWithEmailUseCase,
@@ -42,6 +43,86 @@ public class AuthViewModel extends ViewModel {
 
     public LiveData<RegistrationViewState> getRegistrationViewState(){
         return registrationViewState;
+    }
+
+    /**
+     * Ejecuta el 'loginWithEmailUseCase' y actualiza el 'LoginViewState' en función del resultado de
+     * la validación sobre el proceso.
+     *
+     * @param email El email recibido desde 'validateLoginForm'.
+     * @param password La contraseña recibida desde 'validateLoginForm'.
+     */
+    public void loginWithEmail(String email, String password) {
+        loginViewState.setValue(LoginViewState.loading());
+
+        loginWithEmailUseCase.execute(email, password).observeForever(resource -> {
+            switch (resource.getStatus()){
+                case SUCCESS:
+                    if (resource.getData() != null){
+                        loginViewState.setValue(LoginViewState.success());
+                    } else {
+                        loginViewState.setValue(LoginViewState.error("Error inesperado"));
+                    }
+                    break;
+                case ERROR:
+                    loginViewState.setValue(LoginViewState.error(resource.getMessage()));
+                    break;
+                case LOADING:
+                    loginViewState.setValue(LoginViewState.loading());
+                    break;
+            }
+        });
+    }
+
+    /**
+     * Ejecuta el 'registerWithEmailUseCase' y actualiza el 'RegistrationViewState' en función del
+     * resultado de la validación sobre el proceso.
+     *
+     * @param email El email recibido desde 'validateRegisterForm'.
+     * @param password La contraseña recibida desde 'validateRegisterForm'.
+     */
+    public void registerWithEmail(String email, String password){
+        registrationViewState.setValue(RegistrationViewState.loading());
+
+        registerWithEmailUseCase.execute(email, password).observeForever(resource -> {
+            switch (resource.getStatus()){
+                case SUCCESS:
+                    if (resource.getData() != null){
+                        registrationViewState.setValue(RegistrationViewState.success());
+                    } else {
+                        registrationViewState.setValue(RegistrationViewState.error("Respuesta inesperada del servidor"));
+                    }
+                    break;
+                case ERROR:
+                    registrationViewState.setValue(RegistrationViewState.error(resource.getMessage()));
+                    break;
+                case LOADING:
+                    registrationViewState.setValue(RegistrationViewState.loading());
+                    break;
+            }
+        });
+    }
+
+    public void loginWithGoogle(String tokenId){
+        loginViewState.setValue(LoginViewState.loading());
+
+        loginWithGoogleUseCase.execute(tokenId).observeForever(resource -> {
+            switch (resource.getStatus()){
+                case SUCCESS:
+                    if (resource.getData() != null){
+                        loginViewState.setValue(LoginViewState.success());
+                    } else {
+                        loginViewState.setValue(LoginViewState.error("Respuesta inesperada del servidor"));
+                    }
+                    break;
+                case ERROR:
+                    loginViewState.setValue(LoginViewState.error(resource.getMessage()));
+                    break;
+                case LOADING:
+                    loginViewState.setValue(LoginViewState.loading());
+                    break;
+            }
+        });
     }
 
     /**
@@ -81,55 +162,6 @@ public class AuthViewModel extends ViewModel {
     }
 
     /**
-     * Ejecuta el 'loginWithEmailUseCase' y actualiza el 'LoginViewState' en función del resultado de
-     * la validación sobre el proceso.
-     *
-     * @param email El email recibido desde 'validateLoginForm'.
-     * @param password La contraseña recibida desde 'validateLoginForm'.
-     */
-    public void loginWithEmail(String email, String password) {
-        loginViewState.setValue(LoginViewState.loading());
-
-        loginWithEmailUseCase.execute(email, password)
-                .addOnSuccessListener(authResult -> loginViewState.setValue(LoginViewState.success()))
-                .addOnFailureListener(e -> loginViewState.setValue(LoginViewState.error(e.getMessage())));
-    }
-
-    /**
-     * Ejecuta el 'registerWithEmailUseCase' y actualiza el 'RegistrationViewState' en función del
-     * resultado de la validación sobre el proceso.
-     *
-     * @param email El email recibido desde 'validateRegisterForm'.
-     * @param password La contraseña recibida desde 'validateRegisterForm'.
-     */
-    public void registerWithEmail(String email, String password){
-        registrationViewState.setValue(RegistrationViewState.loading());
-
-        registerWithEmailUseCase.execute(email, password).observeForever(resource -> {
-            switch (resource.getStatus()){
-                case SUCCESS:
-                    if (resource.getData() != null && resource.getData()){
-                        registrationViewState.setValue(RegistrationViewState.success());
-                    } else {
-                        registrationViewState.setValue(RegistrationViewState.error("Respuesta inesperada del servidor"));
-                    }
-                    break;
-                case ERROR:
-                    registrationViewState.setValue(RegistrationViewState.error(resource.getMessage()));
-                    break;
-                case LOADING:
-                    registrationViewState.setValue(RegistrationViewState.loading());
-                    break;
-            }
-        });
-    }
-
-
-    // FALTA VALIDACIÓN CON GOOGLE
-
-
-
-    /**
      * Lógica de validación del campo email.
      *
      * @param email El email introducido.
@@ -159,4 +191,6 @@ public class AuthViewModel extends ViewModel {
     private boolean isValidConfirmPassword(String password, String confirmPassword){
         return isValidPassword(password) && password.equals(confirmPassword);
     }
+
+
 }

@@ -39,9 +39,12 @@ navigationUi = "2.9.0"
 retrofit = "2.11.0"
 
 [libraries]
-# Fragment
+# Google Credentials
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+# Google Id
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+# Fragment
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 # LifeCycle
 androidx-lifecycle-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycleRuntimeVersion" }
@@ -53,7 +56,6 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 # Gson
-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 # GsonConverter
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }

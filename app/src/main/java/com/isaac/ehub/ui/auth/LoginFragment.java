@@ -1,21 +1,43 @@
 package com.isaac.ehub.ui.auth;
 
+import static android.content.ContentValues.TAG;
+
+import static com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.credentials.Credential;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialException;
+import androidx.credentials.exceptions.GetCredentialInterruptedException;
+import androidx.credentials.exceptions.NoCredentialException;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.CancellationSignal;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.isaac.ehub.HomeActivity;
 import com.isaac.ehub.R;
 import com.isaac.ehub.databinding.FragmentLoginBinding;
+
+import java.util.concurrent.Executors;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -48,10 +70,82 @@ public class LoginFragment extends Fragment {
             authViewModel.validateLoginForm(email, password);
         });
 
+        binding.btnGoogleSignIn.setOnClickListener(v -> {
+            launchGoogleSignInFlow();
+        });
+
         binding.tvRegister.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_registrationFragment);
         });
+    }
 
+    private void launchGoogleSignInFlow() {
+        GetSignInWithGoogleOption getSignInWithGoogleOption = new GetSignInWithGoogleOption
+                .Builder(getString(R.string.default_web_client_id))
+                .build();
+
+        GetCredentialRequest request = new GetCredentialRequest.Builder()
+                .addCredentialOption(getSignInWithGoogleOption)
+                .build();
+
+        CredentialManager credentialManager = CredentialManager.create(requireContext());
+
+        credentialManager.getCredentialAsync(
+                requireActivity(),
+                request,
+                new CancellationSignal(),
+                ContextCompat.getMainExecutor(requireContext()),
+                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                    @Override
+                    public void onResult(GetCredentialResponse result) {
+                        handleSignIn(result);
+                    }
+
+                    @Override
+                    public void onError(@NonNull GetCredentialException e) {
+                        handleFailure(e);
+                    }
+                }
+        );
+    }
+
+    private void handleSignIn(GetCredentialResponse response) {
+        Credential credential = response.getCredential();
+        // Check if credential is of type Google ID
+        if (credential instanceof CustomCredential) {
+            CustomCredential customCredential = (CustomCredential) credential;
+            if (TYPE_GOOGLE_ID_TOKEN_CREDENTIAL.equals(credential.getType())) {
+                // Create Google ID Token
+                Bundle credentialData = customCredential.getData();
+                GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credentialData);
+
+                // Sign in to Firebase using the token
+                authViewModel.loginWithGoogle(googleIdTokenCredential.getIdToken());
+            } else {
+                Log.w(TAG, "Credential is not of type Google ID!");
+            }
+        } else {
+            Log.w(TAG, "Credential is not a CustomCredential!");
+        }
+    }
+
+    private void handleFailure(GetCredentialException e) {
+        Log.e(TAG, "Sign in failed", e);
+
+        // Mostrar mensaje de error al usuario
+        if (getContext() != null) {
+            Toast.makeText(getContext(), "Error during Google sign in: " + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        // Opcional: Manejar tipos específicos de errores
+        if (e instanceof NoCredentialException) {
+            // El usuario canceló el flujo de autenticación
+            Log.d(TAG, "User canceled the sign in flow");
+        } else if (e instanceof GetCredentialInterruptedException) {
+            // El flujo fue interrumpido
+            Log.w(TAG, "Sign in flow was interrupted");
+        }
     }
 
     private void observeViewModel(){

@@ -1,7 +1,8 @@
 package com.isaac.ehub.domain.usecase.auth;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.lifecycle.LiveData;
+
+import com.isaac.ehub.core.Resource;
 import com.isaac.ehub.domain.repository.AuthRepository;
 
 import javax.inject.Inject;
@@ -21,7 +22,7 @@ public class RegisterWithEmailUseCase {
         this.authRepository = authRepository;
     }
 
-    public Task<AuthResult> execute(String email, String password){
+    public LiveData<Resource<Boolean>> execute(String email, String password){
         return authRepository.registerWithEmail(email, password);
     }
 }

@@ -1,26 +1,28 @@
 package com.isaac.ehub.data.repository;
 
+import static android.content.ContentValues.TAG;
+import static com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL;
+
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.credentials.Credential;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+
 import com.isaac.ehub.core.Resource;
-import com.isaac.ehub.data.remote.api.RetrofitService;
-import com.isaac.ehub.data.remote.model.AuthResponse;
-import com.isaac.ehub.data.remote.model.LoginRequest;
-import com.isaac.ehub.data.remote.model.RegisterRequest;
 import com.isaac.ehub.domain.repository.AuthRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @Singleton
 public class AuthRepositoryImpl implements AuthRepository {
@@ -32,22 +34,77 @@ public class AuthRepositoryImpl implements AuthRepository {
         this.firebaseAuth = firebaseAuth;
     }
 
+    /**
+     * Registro con email.
+     *
+     * @param email
+     * @param password
+     * @return
+     */
     @Override
-    public Task<AuthResult> registerWithEmail(String email, String password) {
-        return firebaseAuth.createUserWithEmailAndPassword(email, password);
+    public LiveData<Resource<Boolean>> registerWithEmail(String email, String password) {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> result.setValue(Resource.success(true)))
+                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
+
+        return result;
     }
 
+    /**
+     * Login con email.
+     *
+     * @param email
+     * @param password
+     * @return
+     */
     @Override
-    public Task<AuthResult> loginWithEmail(String email, String password){
-        return firebaseAuth.signInWithEmailAndPassword(email, password);
+    public LiveData<Resource<Boolean>> loginWithEmail(String email, String password) {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> result.setValue(Resource.success(true)))
+                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
+
+        return result;
     }
 
 
+    /**
+     * Login con Google.
+     *
+     * @return
+     */
     @Override
-    public Task<AuthResult> loginWithGoogle(String idToken){
+    public LiveData<Resource<Boolean>> loginWithGoogle(String idToken){
+
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        return firebaseAuth.signInWithCredential(credential);
+
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        firebaseAuth.signInWithCredential(credential)
+                .addOnSuccessListener(authResult -> result.setValue(Resource.success(true)))
+                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
+
+        return result;
     }
 
+    /*
+    private void handleSignIn(Credential credential) {
+        if (credential instanceof CustomCredential) {
+            CustomCredential customCredential = (CustomCredential) credential;
 
+            if (credential.getType().equals(TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
+                Bundle credentialData = customCredential.getData();
+                GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credentialData);
+                loginWithGoogle(googleIdTokenCredential.getIdToken());
+            } else {
+                Log.w(TAG, "Credential is not of type Google ID!");
+            }
+        }
+    }*/
 }
