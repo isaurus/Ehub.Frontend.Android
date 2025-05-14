@@ -90,23 +90,9 @@ public class AuthViewModel extends ViewModel {
     public void loginWithEmail(String email, String password) {
         loginViewState.setValue(LoginViewState.loading());
 
-        loginWithEmailUseCase.execute(email, password).observeForever(resource -> {
-            switch (resource.getStatus()){
-                case SUCCESS:
-                    if (resource.getData() != null && resource.getData()){
-                        loginViewState.setValue(LoginViewState.success());
-                    } else {
-                        loginViewState.setValue(LoginViewState.error("Respuesta inesperada del servidor"));
-                    }
-                    break;
-                case ERROR:
-                    loginViewState.setValue(LoginViewState.error(resource.getMessage()));
-                    break;
-                case LOADING:
-                    loginViewState.setValue(LoginViewState.loading());
-                    break;
-            }
-        });
+        loginWithEmailUseCase.execute(email, password)
+                .addOnSuccessListener(authResult -> loginViewState.setValue(LoginViewState.success()))
+                .addOnFailureListener(e -> loginViewState.setValue(LoginViewState.error(e.getMessage())));
     }
 
     /**

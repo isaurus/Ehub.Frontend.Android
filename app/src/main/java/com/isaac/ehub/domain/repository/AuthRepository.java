@@ -14,5 +14,5 @@ import com.google.firebase.auth.AuthResult;
 public interface AuthRepository {
     Task<AuthResult> registerWithEmail(String email, String password);
     Task<AuthResult> loginWithEmail(String email, String password);
-    Task<AuthResult> loginWithGoogle(String token);
+    Task<AuthResult> loginWithGoogle(String idToken);
 }

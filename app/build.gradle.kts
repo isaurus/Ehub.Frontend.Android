@@ -75,9 +75,14 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.navigation.ui)
 
-    // Firebase BoM
+    // Firebase BoM + Auth
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+
+    // Firebase Credential Manager (Google)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     // Lottie
     //implementation(libs.lottie)

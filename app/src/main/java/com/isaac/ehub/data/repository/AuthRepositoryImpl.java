@@ -3,7 +3,11 @@ package com.isaac.ehub.data.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.isaac.ehub.core.Resource;
 import com.isaac.ehub.data.remote.api.RetrofitService;
 import com.isaac.ehub.data.remote.model.AuthResponse;
@@ -29,56 +33,21 @@ public class AuthRepositoryImpl implements AuthRepository {
     }
 
     @Override
-    public LiveData<Resource<Boolean>> loginWithEmail(String email, String password) {
-        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
-        result.setValue(Resource.loading());
-
-        retrofit.login(new LoginRequest(email, password)).enqueue(new Callback<AuthResponse>() {
-            @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                if (response.isSuccessful() && response.body() != null){
-                    result.setValue(Resource.success(true));
-                } else {
-                    result.setValue(Resource.error("Error"));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthResponse> call, Throwable throwable) {
-                result.setValue(Resource.error("Error de red: " + throwable.getMessage()));
-            }
-        });
-
-        return result;
-
+    public Task<AuthResult> registerWithEmail(String email, String password) {
+        return firebaseAuth.createUserWithEmailAndPassword(email, password);
     }
 
     @Override
-    public LiveData<Resource<Boolean>> loginWithGoogle(String idToken) {
-        return null;
+    public Task<AuthResult> loginWithEmail(String email, String password){
+        return firebaseAuth.signInWithEmailAndPassword(email, password);
     }
+
 
     @Override
-    public LiveData<Resource<Boolean>> registerWithEmail(String email, String password) {
-        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
-        result.setValue(Resource.loading());
-
-        retrofit.register(new RegisterRequest(email, password)).enqueue(new Callback<AuthResponse>() {
-            @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                if (response.isSuccessful() && response.body() != null){
-                    result.setValue(Resource.success(true));
-                } else {
-                    result.setValue(Resource.error("Error en fase de registro"));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthResponse> call, Throwable throwable) {
-                result.setValue(Resource.error("Error de red: " + throwable.getMessage()));
-            }
-        });
-
-        return result;
+    public Task<AuthResult> loginWithGoogle(String idToken){
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        return firebaseAuth.signInWithCredential(credential);
     }
+
+
 }

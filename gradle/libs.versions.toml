@@ -2,12 +2,14 @@
 agp = "8.9.2"
 # GsonConverter
 converterGson = "2.11.0"
-# Firebase Auth
-firebaseAuth = "23.2.0"
+# Credential Manager
+credentials = "1.5.0"
 # Firebase BoM
 firebaseBom = "33.13.0"
 # Fragment
 fragment = "1.8.6"
+# Google ID
+googleid = "1.1.1"
 # Gson
 gson = "2.11.0"
 # Test
@@ -38,6 +40,8 @@ retrofit = "2.11.0"
 
 [libraries]
 # Fragment
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 # LifeCycle
 androidx-lifecycle-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycleRuntimeVersion" }
@@ -45,11 +49,11 @@ androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-
 androidx-lifecycle-viewmodel-android = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-android", version.ref = "lifecycleLivedata" }
 # Activity
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-# Firebase Auth
-firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
- # Firebase BoM
+ # Firebase BoM + Auth
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 # Gson
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 # GsonConverter
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
