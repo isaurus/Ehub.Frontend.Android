@@ -13,6 +13,10 @@ import com.isaac.ehub.domain.usecase.auth.RegisterWithEmailUseCase;
 import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * 'ViewModel' que gestiona la lógica de la fase de autenticación en 'LoginFragment' y
+ * 'RegistrationFragment'
+ */
 @HiltViewModel
 public class AuthViewModel extends ViewModel {
 
@@ -25,7 +29,13 @@ public class AuthViewModel extends ViewModel {
     public final MutableLiveData<LoginViewState> loginViewState = new MutableLiveData<>();
     public final MutableLiveData<RegistrationViewState> registrationViewState = new MutableLiveData<>();
 
-
+    /**
+     * Constructor que inyecta con Hilt los 'UseCase' de la fase de autenticación.
+     *
+     * @param loginWithEmailUseCase 'UseCase' para login con correo y contraseña.
+     * @param loginWithGoogleUseCase 'UseCase' para login con Google.
+     * @param registerWithEmailUseCase 'UseCase' para el registro con correo y contraseña.
+     */
     @Inject
     public AuthViewModel(
             LoginWithEmailUseCase loginWithEmailUseCase,
@@ -103,6 +113,12 @@ public class AuthViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Ejecuta el 'loginWithGoogleUseCase' y actualiza el 'LoginViewState' en función del
+     *      * resultado de la validación sobre el proceso.
+     *
+     * @param tokenId El token de Google para la autenticación con Firebase.
+     */
     public void loginWithGoogle(String tokenId){
         loginViewState.setValue(LoginViewState.loading());
 
@@ -191,6 +207,4 @@ public class AuthViewModel extends ViewModel {
     private boolean isValidConfirmPassword(String password, String confirmPassword){
         return isValidPassword(password) && password.equals(confirmPassword);
     }
-
-
 }

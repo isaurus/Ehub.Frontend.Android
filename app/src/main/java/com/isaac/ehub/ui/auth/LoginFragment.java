@@ -41,6 +41,10 @@ import java.util.concurrent.Executors;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Fragmento de login. Utiliza ViewBinding para gestionar las vistas de la UI y utiliza el
+ * 'AuthViewModel' para delegar la lógica.
+ */
 @AndroidEntryPoint
 public class LoginFragment extends Fragment {
 
@@ -62,6 +66,10 @@ public class LoginFragment extends Fragment {
         observeViewModel();
     }
 
+    /**
+     * Configura los listeners del fragmento para los botones de login con correo y contraseña,
+     * login con Google y navegación al fragmento de registro.
+     */
     private void setUpListeners(){
         binding.btnLogin.setOnClickListener(v ->{
             String email = binding.etEmail.getText().toString().trim();
@@ -79,6 +87,36 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    /**
+     * Observa los cambios en el fragmento y actualiza la UI según los inputs.
+     */
+    private void observeViewModel(){
+        authViewModel.getLoginViewState().observe(getViewLifecycleOwner(), viewState -> {
+            binding.progressBar.setVisibility(viewState.isLoading() ? View.VISIBLE : View.GONE);
+
+            if (!viewState.isEmailValid()){
+                binding.tilEmail.setError("Email no válido");
+            } else{
+                binding.tilEmail.setError(null);
+            }
+
+            if (!viewState.isPasswordValid()){
+                binding.tilPassword.setError("Contraseña inválida");
+            } else{
+                binding.tilPassword.setError(null);
+            }
+
+            if (viewState.isSuccess()){
+                requireActivity().startActivity(new Intent(requireContext(), HomeActivity.class));
+                requireActivity().finish();
+            }
+        });
+    }
+
+    /**
+     * Lanza el 'Credential Manager' en el fragment cuando se pulsa sobre el botón de Google para
+     * iniciar sesión con las cuentas asociadas al dispositivo.
+     */
     private void launchGoogleSignInFlow() {
         GetSignInWithGoogleOption getSignInWithGoogleOption = new GetSignInWithGoogleOption
                 .Builder(getString(R.string.default_web_client_id))
@@ -109,6 +147,11 @@ public class LoginFragment extends Fragment {
         );
     }
 
+    /**
+     * Gestiona la respuesta de éxito en el login.
+     *
+     * @param response El resultado de la solicitud de la credencial.
+     */
     private void handleSignIn(GetCredentialResponse response) {
         Credential credential = response.getCredential();
         // Check if credential is of type Google ID
@@ -129,6 +172,11 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    /**
+     * Gestiona la respuesta de error en el login desde el 'Credential Manager'
+     *
+     * @param e El error lanzado por el 'Credential Manager'.
+     */
     private void handleFailure(GetCredentialException e) {
         Log.e(TAG, "Sign in failed", e);
 
@@ -146,29 +194,6 @@ public class LoginFragment extends Fragment {
             // El flujo fue interrumpido
             Log.w(TAG, "Sign in flow was interrupted");
         }
-    }
-
-    private void observeViewModel(){
-        authViewModel.getLoginViewState().observe(getViewLifecycleOwner(), viewState -> {
-            binding.progressBar.setVisibility(viewState.isLoading() ? View.VISIBLE : View.GONE);
-
-            if (!viewState.isEmailValid()){
-                binding.tilEmail.setError("Email no válido");
-            } else{
-                binding.tilEmail.setError(null);
-            }
-
-            if (!viewState.isPasswordValid()){
-                binding.tilPassword.setError("Contraseña inválida");
-            } else{
-                binding.tilPassword.setError(null);
-            }
-
-            if (viewState.isSuccess()){
-                requireActivity().startActivity(new Intent(requireContext(), HomeActivity.class));
-                requireActivity().finish();
-            }
-        });
     }
 
     @Override

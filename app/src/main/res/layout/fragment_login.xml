@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="O inicia sesión con" />
+            android:text="O" />
 
         <View
             android:layout_width="0dp"
@@ -121,20 +121,20 @@
             android:background="?android:attr/listDivider" />
     </LinearLayout>
 
-    <!-- Botón de Google (ImageButton con logo) -->
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_google_sign_in"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@null"
-        android:contentDescription="Iniciar sesión con Google"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_google"
+        android:backgroundTint="@color/black"
+        android:padding="12dp"
+        android:text="Iniciar sesión con Google"
+        app:icon="@drawable/ic_google"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_top"
-        app:layout_constraintBottom_toTopOf="@+id/divider_bottom" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_top" />
 
     <!-- Segundo separador (línea simple) -->
     <View
