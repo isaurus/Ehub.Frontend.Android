@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @InstallIn(SingletonComponent.class)
 public class AppModule {
 
-    private static final String BASE_URL = "http://10.0.2.2:5048/"; // MIRAR BIEN ESTO
+    private static final String BASE_URL = "http://100.100.100.100:8082/"; // MIRAR BIEN ESTO
 
     @Provides
     @Singleton

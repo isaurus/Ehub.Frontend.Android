@@ -1,4 +1,4 @@
-package com.isaac.ehub.ui.member;
+package com.isaac.ehub.ui.team.task;
 
 import android.os.Bundle;
 
@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 
 import com.isaac.ehub.R;
 
-public class MemberFragment extends Fragment {
+public class TaskFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflar el layout del fragment (debes crearlo, ej. fragment_calendar.xml)
-        return inflater.inflate(R.layout.fragment_member, container, false);
+        return inflater.inflate(R.layout.fragment_task, container, false);
     }
 }

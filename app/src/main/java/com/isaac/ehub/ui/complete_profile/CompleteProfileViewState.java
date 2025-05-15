@@ -25,17 +25,17 @@ public class CompleteProfileViewState {
         this.isAvatarSelected = isAvatarSelected;
     }
 
-    public static CompleteProfileViewState validating(boolean isFirstNameValid,
+    public static CompleteProfileViewState validating(boolean isAvatarSelected,
+                                                      boolean isFirstNameValid,
                                                       boolean isLastNameValid,
                                                       boolean isBirthDateValid,
-                                                      boolean isNationalityValid,
-                                                      boolean isAvatarSelected) {
+                                                      boolean isNationalityValid) {
         return new CompleteProfileViewState(Resource.validating(),
+                isAvatarSelected,
                 isFirstNameValid,
                 isLastNameValid,
                 isBirthDateValid,
-                isNationalityValid,
-                isAvatarSelected);
+                isNationalityValid);
     }
 
     public static CompleteProfileViewState loading() {

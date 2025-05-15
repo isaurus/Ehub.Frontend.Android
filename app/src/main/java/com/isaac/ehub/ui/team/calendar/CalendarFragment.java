@@ -1,4 +1,4 @@
-package com.isaac.ehub.ui.calendar;
+package com.isaac.ehub.ui.team.calendar;
 
 import android.os.Bundle;
 

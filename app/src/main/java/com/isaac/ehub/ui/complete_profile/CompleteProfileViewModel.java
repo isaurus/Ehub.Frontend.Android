@@ -49,5 +49,66 @@ public class CompleteProfileViewModel extends ViewModel {
         });
     }
 
-    // FALTARÍAN AÑADIR VALIDACIONES PARA LOS CAMPOS
+    /**
+     * Lógica para validar los campos una vez introducidos.
+     *
+     * @param avatarUrl
+     * @param firstName
+     * @param lastName
+     * @param birthDate
+     * @param country
+     */
+    public void validateFields(String avatarUrl, String firstName, String lastName, String birthDate, String country) {
+        boolean isAvatarUrlValid = isValidAvatarUrl(avatarUrl); // NO SE USA HASTA IMPLEMENTAR EL GET
+        boolean isFirstNameValid = isValidFirstName(firstName);
+        boolean isLastNameValid = isValidLastName(lastName);
+        boolean isBirthDateValid = isValidBirthDate(birthDate);
+        boolean isCountryValid = isValidCountry(country);
+
+        completeUserProfileViewState.setValue(
+                CompleteProfileViewState.validating(
+                        true, // ASUMIMOS QUE ESTÁ PRESELECCIONADO HASTA IMPLEMENTARLO
+                        isFirstNameValid,
+                        isLastNameValid,
+                        isBirthDateValid,
+                        isCountryValid
+                )
+        );
+
+        // Si todos los campos son válidos, proceder con el registro
+        if (isFirstNameValid && isLastNameValid && isBirthDateValid && isCountryValid) {
+            // Crear UserModel y llamar al caso de uso
+            UserModel userModel = new UserModel(
+                    "", // avatarUrl
+                    firstName,
+                    lastName,
+                    birthDate,
+                    country
+            );
+            completeUserProfile(userModel);
+        }
+    }
+
+    // ¡MEJORAR LA LÓGICA DE LAS VALIDACIONES PARA TEMA DE CARACTERES, ETC.
+
+    private boolean isValidAvatarUrl(String avatarUrl){
+        return !avatarUrl.isEmpty();
+    }
+
+    private boolean isValidFirstName(String firstName){
+        return !firstName.isEmpty();
+    }
+
+    private boolean isValidLastName(String lastName){
+        return !lastName.isEmpty();
+    }
+
+    private boolean isValidBirthDate(String birthDate){
+        return !birthDate.isEmpty();
+    }
+
+    private boolean isValidCountry(String country){
+        return !country.isEmpty();
+    }
+
 }

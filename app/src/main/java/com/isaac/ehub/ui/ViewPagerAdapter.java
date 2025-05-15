@@ -4,9 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.isaac.ehub.ui.calendar.CalendarFragment;
-import com.isaac.ehub.ui.member.MemberFragment;
-import com.isaac.ehub.ui.task.TaskFragment;
+import com.isaac.ehub.ui.team.TeamContainerFragment;
+import com.isaac.ehub.ui.team.calendar.CalendarFragment;
+import com.isaac.ehub.ui.team.member.MemberFragment;
+import com.isaac.ehub.ui.team.task.TaskFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
