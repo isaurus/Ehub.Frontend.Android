@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.isaac.ehub.HomeActivity;
 import com.isaac.ehub.R;
 import com.isaac.ehub.databinding.FragmentRegistrationBinding;
+import com.isaac.ehub.ui.complete_profile.CompleteProfileActivity;
 
 public class RegistrationFragment extends Fragment {
 
@@ -128,7 +129,7 @@ public class RegistrationFragment extends Fragment {
             binding.btnRegister.setEnabled(allValid);
 
             if (viewState.isSuccess()){
-                requireActivity().startActivity(new Intent(requireContext(), HomeActivity.class));
+                requireActivity().startActivity(new Intent(requireContext(), CompleteProfileActivity.class));
                 requireActivity().finish();
             }
         });

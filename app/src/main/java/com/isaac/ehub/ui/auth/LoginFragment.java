@@ -36,6 +36,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.isaac.ehub.HomeActivity;
 import com.isaac.ehub.R;
 import com.isaac.ehub.databinding.FragmentLoginBinding;
+import com.isaac.ehub.ui.complete_profile.CompleteProfileActivity;
 
 import java.util.concurrent.Executors;
 
@@ -107,7 +108,7 @@ public class LoginFragment extends Fragment {
             }
 
             if (viewState.isSuccess()){
-                requireActivity().startActivity(new Intent(requireContext(), HomeActivity.class));
+                requireActivity().startActivity(new Intent(requireContext(), CompleteProfileActivity.class));
                 requireActivity().finish();
             }
         });

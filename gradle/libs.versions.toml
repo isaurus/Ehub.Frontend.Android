@@ -8,6 +8,8 @@ credentials = "1.5.0"
 firebaseBom = "33.13.0"
 # Fragment
 fragment = "1.8.6"
+# Glide
+glide = "4.16.0"
 # Google ID
 googleid = "1.1.1"
 # Gson
@@ -42,6 +44,8 @@ retrofit = "2.11.0"
 # Google Credentials
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+# Glide
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 # Google Id
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 # Fragment

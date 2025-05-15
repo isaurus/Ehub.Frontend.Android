@@ -1,7 +1,9 @@
 package com.isaac.ehub.di;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.isaac.ehub.core.LiveDataCallAdapterFactory;
 import com.isaac.ehub.data.remote.api.RetrofitService;
+import com.isaac.ehub.data.remote.api.UserRetrofitService;
 import com.isaac.ehub.data.repository.AuthRepositoryImpl;
 import com.isaac.ehub.domain.repository.AuthRepository;
 import com.isaac.ehub.domain.usecase.auth.LoginWithEmailUseCase;
@@ -41,6 +43,7 @@ public class AppModule {
                 .baseUrl(BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .build();
     }
 
@@ -48,6 +51,13 @@ public class AppModule {
     @Singleton
     public static RetrofitService provideRetrofitService(Retrofit retrofit) {
         return retrofit.create(RetrofitService.class);
+    }
+
+    // ¡NUEVO!
+    @Provides
+    @Singleton
+    public static UserRetrofitService provideUserRetrofitService(Retrofit retrofit){
+        return retrofit.create(UserRetrofitService.class);
     }
 
     @Provides

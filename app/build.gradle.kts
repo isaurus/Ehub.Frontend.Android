@@ -84,6 +84,9 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
+    // Glide
+    implementation(libs.glide)
+
     // Lottie
     //implementation(libs.lottie)
 
