@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_login_fragment">Hello LOGIN fragment</string>
     <string name="hello_registration_fragment">Hello REGISTRATION fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_web_client_id">394698849339-ol1j8p2ch3cj7bq5qtt6uuql4n6r6316.apps.googleusercontent.com</string>
 </resources>

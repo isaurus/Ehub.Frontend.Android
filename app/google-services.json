@@ -12,7 +12,20 @@
           "package_name": "com.isaac.ehub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "394698849339-98aom2f7ebioup6kd1a99cldd0u82f2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isaac.ehub",
+            "certificate_hash": "719a33fe2bd694bd2d2a7a2093746969c1cf3ed7"
+          }
+        },
+        {
+          "client_id": "394698849339-ol1j8p2ch3cj7bq5qtt6uuql4n6r6316.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAqa6Br-KTARURkG3nSA11U8b3Co9aDiyE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394698849339-ol1j8p2ch3cj7bq5qtt6uuql4n6r6316.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

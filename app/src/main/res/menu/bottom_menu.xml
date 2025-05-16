@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemA"
+        android:icon="@drawable/ic_list"
+        android:title="SoloQ" />
+    <item
+        android:id="@+id/itemB"
+        android:icon="@drawable/ic_group"
+        android:title="Teams" />
+    <item
+        android:id="@+id/itemC"
+        android:icon="@drawable/ic_task"
+        android:title="Tasks" />
+</menu>

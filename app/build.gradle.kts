@@ -20,7 +20,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,9 +29,9 @@ android {
             )
         }
     }
-    // Para SafeArgs (¿necesario?)
     buildFeatures {
         buildConfig = true
+        viewBinding = true  // ViewBinding (reemplazo a 'findViewById()')
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -54,7 +53,7 @@ dependencies {
     // Material
     implementation(libs.material)
     // Fragment
-    implementation(libs.fragment)
+    implementation(libs.androidx.fragment)
     // Activity
     implementation(libs.activity)
     // LifeCycle (LiveData)
@@ -66,15 +65,27 @@ dependencies {
     // DaggerHilt
     implementation(libs.hilt.android)
     annotationProcessor(libs.hilt.compiler)
-    // Firebase (BoM)
-    implementation(platform(libs.firebase.bom))
-    // Firebase (Google Analytics)
-    implementation(libs.firebase.analytics)
-    // Fire base (auth)
-    implementation(libs.firebase.auth)
+    // Retrofit
+    implementation(libs.retrofit)
+    // Gson
+    implementation(libs.gson)
+    // GsonConverter
+    implementation(libs.converter.gson)
     // Navigation Component
     implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
+    implementation(libs.navigation.ui)
+
+    // Firebase BoM + Auth
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
+    // Firebase Credential Manager (Google)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    // Glide
+    implementation(libs.glide)
 
     // Lottie
     //implementation(libs.lottie)
