@@ -108,7 +108,7 @@ public class LoginFragment extends Fragment {
             }
 
             if (viewState.isSuccess()){
-                requireActivity().startActivity(new Intent(requireContext(), HomeActivity.class));
+                requireActivity().startActivity(new Intent(requireContext(), CompleteProfileActivity.class));
                 requireActivity().finish();
             }
         });
