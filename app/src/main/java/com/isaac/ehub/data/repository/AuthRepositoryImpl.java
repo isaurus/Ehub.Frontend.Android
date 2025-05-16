@@ -92,19 +92,4 @@ public class AuthRepositoryImpl implements AuthRepository {
 
         return result;
     }
-
-    /*
-    private void handleSignIn(Credential credential) {
-        if (credential instanceof CustomCredential) {
-            CustomCredential customCredential = (CustomCredential) credential;
-
-            if (credential.getType().equals(TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
-                Bundle credentialData = customCredential.getData();
-                GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credentialData);
-                loginWithGoogle(googleIdTokenCredential.getIdToken());
-            } else {
-                Log.w(TAG, "Credential is not of type Google ID!");
-            }
-        }
-    }*/
 }

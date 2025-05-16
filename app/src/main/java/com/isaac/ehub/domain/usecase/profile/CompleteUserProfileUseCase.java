@@ -17,7 +17,8 @@ public class CompleteUserProfileUseCase {
         this.userRetrofitService = userRetrofitService;
     }
 
-    public LiveData<Resource<Boolean>> execute(UserModel userModel) {
-        return userRetrofitService.completeUserProfile(userModel);
+    public LiveData<Resource<Boolean>> execute(String firebaseIdToken, UserModel userModel) {
+        String authHeader = "Bearer " + firebaseIdToken;
+        return userRetrofitService.completeUserProfile(authHeader, userModel);
     }
 }

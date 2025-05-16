@@ -5,7 +5,9 @@ import com.isaac.ehub.core.LiveDataCallAdapterFactory;
 import com.isaac.ehub.data.remote.api.RetrofitService;
 import com.isaac.ehub.data.remote.api.UserRetrofitService;
 import com.isaac.ehub.data.repository.AuthRepositoryImpl;
+import com.isaac.ehub.data.repository.FirebaseRepositoryImpl;
 import com.isaac.ehub.domain.repository.AuthRepository;
+import com.isaac.ehub.domain.repository.FirebaseRepository;
 import com.isaac.ehub.domain.usecase.auth.LoginWithEmailUseCase;
 import com.isaac.ehub.domain.usecase.auth.LoginWithGoogleUseCase;
 import com.isaac.ehub.domain.usecase.auth.RegisterWithEmailUseCase;
@@ -70,6 +72,12 @@ public class AppModule {
     @Singleton
     public static AuthRepository provideAuthRepository(FirebaseAuth firebaseAuth){
         return new AuthRepositoryImpl(firebaseAuth);
+    }
+
+    @Provides
+    @Singleton
+    public static FirebaseRepository provideFirebaseRepository(FirebaseAuth firebaseAuth){
+        return new FirebaseRepositoryImpl(firebaseAuth);
     }
 
     @Provides
